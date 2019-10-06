@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{title}} <button v-on:click="updateScores()">Update scores</button></p>
+        <div v-for="game in games">
+            {{game.d}} {{game.t}}: {{game.q}}<br>{{game.vs}} {{game.vnn}}<br>{{game.hs}} {{game.hnn}}
+            <div><br></div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            title: 'Text Scores',
+            games: []
+        },
+        methods: {
+            async updateScores() {
+                console.log('updating scores...');
+                const response = await fetch('http://www.nfl.com/liveupdate/scorestrip/ss.json');
+                const myJson = await response.json();
+                //console.log(JSON.stringify(myJson));
+                this.games = myJson.gms;
+                console.log(this.games);
+            }
+        }
+    });
+</script>
