@@ -30,8 +30,18 @@
         },
         methods: {
             async updateScores() {
+                const myHeaders = new Headers();
+
+                const myInit = {
+                    method: 'GET',
+                    headers: myHeaders,
+                    mode: 'cors',
+                    cache: 'default'
+                };
+
                 console.log('updating scores...');
-                const response = await fetch('http://www.nfl.com/liveupdate/scorestrip/ss.json');
+                const myRequest = new Request('http://www.nfl.com/liveupdate/scorestrip/ss.json', myInit);
+                const response = await fetch(myRequest);
                 const myJson = await response.json();
                 //console.log(JSON.stringify(myJson));
                 this.games = myJson.gms;
